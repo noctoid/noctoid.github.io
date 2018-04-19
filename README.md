@@ -9,5 +9,12 @@ Some projects I have done or I am contributing to.
 
 * [NekoGram!](http://www.nekogram.com/) - A Miniature Instagram - [Source](https://github.com/noctoid/nekogram)
 * [ImgRecog](http://recognition.noctoid.com/) - An Image Recognition Project - [Source](https://github.com/noctoid/ImgRecog)
-* [Greenway US Homes](http://www.greenwayushomes.com/) - A Real Estate Selling Website - Closed Source
-* [American Gateway Landing Page](https://www.agrcusa.com/) - A Landing Page for American Gateway Regional Center - Closed Source
+* [Greenway US Homes](http://www.greenwayushomes.com/) - A Real Estate Selling Website
+* [American Gateway Landing Page](https://www.agrcusa.com/) - A Landing Page for American Gateway Regional Center
+
+经手的一些项目
+
+* [NekoGram!](http://www.nekogram.com/) - 迷你版Instagram - [源码](https://github.com/noctoid/nekogram)
+* [ImgRecog](http://recognition.noctoid.com/) - 图像识别项目 - [源码](https://github.com/noctoid/ImgRecog)
+* [Greenway US Homes](http://www.greenwayushomes.com/) - 不动产销售平台
+* [American Gateway Landing Page](https://www.agrcusa.com/) - 美国大通区域中心公司网站
