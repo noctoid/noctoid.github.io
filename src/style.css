@@ -1,17 +1,145 @@
 @import "tailwindcss";
 @import "98.css/dist/98.css";
 
-/* Retro desktop background (98.css ships no default body background). */
+/* "Room" behind the CRT monitor. */
 body {
-  background-color: #008080;
+  background-color: #1a1a1a;
   overflow: hidden;
 }
 
-/* Full-viewport desktop: the positioning context for floating windows. */
-.desktop {
+/* ---------- CRT monitor frame ---------- */
+/* Beige 4:3 shell, 100% of the page height, centered in the viewport. */
+.crt-monitor {
   position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 100vh;
+  aspect-ratio: 4 / 3;
+  background: linear-gradient(160deg, #e4d9b7 0%, #d3c7a0 55%, #beb088 100%);
+  border-radius: 26px;
+  box-shadow:
+    0 24px 70px rgba(0, 0, 0, 0.55),
+    inset 0 2px 0 rgba(255, 255, 255, 0.5),
+    inset 0 -3px 0 rgba(0, 0, 0, 0.16);
+}
+
+/* Power LED on the bottom bezel. */
+.crt-monitor::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 3%;
+  transform: translateX(-50%);
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #45b968;
+  box-shadow: 0 0 6px rgba(69, 185, 104, 0.9);
+}
+
+/* The glass tube: teal desktop inset within the beige bezel. */
+.crt-screen {
+  position: absolute;
+  top: 6%;
+  left: 7%;
+  right: 7%;
+  bottom: 10%;
+  background: #008080;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow:
+    inset 0 0 30px rgba(0, 0, 0, 0.45),
+    inset 0 0 3px rgba(0, 0, 0, 0.65);
+}
+
+/* Subtle CRT vignette over the display (non-interactive). */
+.crt-screen::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 10000;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(0, 0, 0, 0) 55%,
+    rgba(0, 0, 0, 0.24) 100%
+  );
+}
+
+/* Full-screen desktop: the positioning context for floating windows. */
+.desktop {
+  position: absolute;
   inset: 0;
   overflow: hidden;
+}
+
+/* ---------- Desktop icons ---------- */
+.desktop-icon {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 4px 6px;
+  margin: 0;
+  background: none;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  color: #000;
+  text-shadow: none;
+  min-width: 0;
+  min-height: 0;
+  box-sizing: border-box;
+  cursor: default;
+  text-align: center;
+  user-select: none;
+}
+
+.desktop .desktop-icon:hover,
+.desktop .desktop-icon:active {
+  box-shadow: none;
+  text-shadow: none;
+}
+
+.desktop-icon:focus {
+  outline: none;
+}
+
+.desktop-icon:focus-visible {
+  outline: 1px dotted #000;
+  outline-offset: 2px;
+}
+
+.desktop-icon-img {
+  display: block;
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+}
+
+.desktop-icon-label {
+  font-size: 11px;
+  line-height: 1.2;
+  color: #fff;
+  text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.6);
+  padding: 1px 3px;
+  word-break: break-word;
+  max-width: 100%;
+}
+
+.desktop-icon.selected .desktop-icon-label {
+  background: #000080;
+  color: #fff;
+  text-shadow: none;
+}
+
+.desktop-icon.selected .icon-tint {
+  opacity: 0.35;
 }
 
 /* ---------- Window frame ---------- */
@@ -213,7 +341,7 @@ body {
 
 /* ---------- Taskbar ---------- */
 .taskbar {
-  position: fixed;
+  position: absolute;
   left: 0;
   right: 0;
   bottom: 0;
@@ -242,14 +370,30 @@ body {
 }
 
 .task-button {
-  min-width: 0;
-  max-width: 170px;
+  flex: 0 0 160px;
+  width: 160px;
   min-height: 22px;
-  padding: 2px 8px;
+  padding: 2px 6px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  text-align: left;
+}
+
+.task-button-label {
+  flex: 1;
+  min-width: 0;
+  color: #000;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  text-align: left;
+}
+
+.taskbar-icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  display: block;
 }
 
 .task-button.active {

@@ -66,7 +66,7 @@ function openGitHub() {
           @dblclick.stop="open(post.slug)"
           @keydown.enter.prevent="open(post.slug)"
         >
-          <FileIcon />
+          <FileIcon class="file-icon" />
           <span class="file-name">{{ post.title }}</span>
         </button>
       </div>

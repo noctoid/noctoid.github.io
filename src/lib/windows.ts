@@ -31,14 +31,16 @@ export const windowsState = reactive({
 })
 
 let zTop = 0
-let initialized = false
 
 function workArea(): Rect {
+  const desktop = document.querySelector<HTMLElement>('.desktop')
+  const width = desktop ? desktop.clientWidth : window.innerWidth
+  const height = desktop ? desktop.clientHeight : window.innerHeight
   return {
     x: 0,
     y: 0,
-    width: window.innerWidth,
-    height: Math.max(window.innerHeight - TASKBAR_HEIGHT, 120),
+    width,
+    height: Math.max(height - TASKBAR_HEIGHT, 120),
   }
 }
 
@@ -98,7 +100,6 @@ export function openArticle(slug: string, title: string): string {
 export function closeWindow(id: string): void {
   const i = windowsState.windows.findIndex((w) => w.id === id)
   if (i < 0) return
-  if (windowsState.windows[i].kind === 'explorer') return // never close the desktop
   windowsState.windows.splice(i, 1)
   if (windowsState.activeId === id) recomputeActive()
 }
@@ -158,9 +159,13 @@ export function taskbarActivate(id: string): void {
   }
 }
 
-export function initWindows(): void {
-  if (initialized) return
-  initialized = true
+export function openExplorer(): string {
+  const existing = windowsState.windows.find((w) => w.kind === 'explorer')
+  if (existing) {
+    existing.minimized = false
+    focus(existing.id)
+    return existing.id
+  }
 
   const area = workArea()
   const width = Math.min(680, area.width - 24)
@@ -168,7 +173,7 @@ export function initWindows(): void {
   const win: AppWindow = {
     id: 'explorer',
     kind: 'explorer',
-    title: '洋子数码广场 | Noctoid Blog',
+    title: 'Blogs',
     rect: {
       x: Math.max(8, Math.round((area.width - width) / 2)),
       y: Math.max(8, Math.round((area.height - height) / 2)),
@@ -182,4 +187,5 @@ export function initWindows(): void {
   }
   windowsState.windows.push(win)
   focus(win.id)
+  return win.id
 }

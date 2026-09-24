@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted, ref } from 'vue'
 import { TASKBAR_HEIGHT, taskbarActivate, windowsState } from '@/lib/windows'
+import SuitcaseIcon from '@/components/SuitcaseIcon.vue'
+import FileIcon from '@/components/FileIcon.vue'
 
 const now = ref('')
 let timer: number | undefined
@@ -36,7 +38,9 @@ function updateClock() {
         :class="{ active: !win.minimized && windowsState.activeId === win.id }"
         @click="taskbarActivate(win.id)"
       >
-        {{ win.title }}
+        <SuitcaseIcon v-if="win.kind === 'explorer'" class="taskbar-icon" />
+        <FileIcon v-else class="taskbar-icon" />
+        <span class="task-button-label">{{ win.title }}</span>
       </button>
     </div>
     <div class="tray">

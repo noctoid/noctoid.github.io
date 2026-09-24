@@ -1,9 +1,6 @@
 <template>
   <svg
-    class="file-icon"
     viewBox="0 0 32 32"
-    width="32"
-    height="32"
     aria-hidden="true"
     focusable="false"
   >
