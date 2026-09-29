@@ -4,7 +4,7 @@ export const TASKBAR_HEIGHT = 28
 export const MIN_WIDTH = 320
 export const MIN_HEIGHT = 200
 
-export type WindowKind = 'explorer' | 'article'
+export type WindowKind = 'explorer' | 'article' | 'photos' | 'photobook'
 
 export interface Rect {
   x: number
@@ -179,6 +179,67 @@ export function openExplorer(): string {
       y: Math.max(8, Math.round((area.height - height) / 2)),
       width,
       height,
+    },
+    z: 0,
+    minimized: false,
+    maximized: false,
+    restoreRect: null,
+  }
+  windowsState.windows.push(win)
+  focus(win.id)
+  return win.id
+}
+
+export function openPhotography(): string {
+  const existing = windowsState.windows.find((w) => w.kind === 'photos')
+  if (existing) {
+    existing.minimized = false
+    focus(existing.id)
+    return existing.id
+  }
+
+  const area = workArea()
+  const width = Math.min(760, area.width - 24)
+  const height = Math.min(560, area.height - 24)
+  const win: AppWindow = {
+    id: 'photos',
+    kind: 'photos',
+    title: 'Photography',
+    rect: {
+      x: Math.max(8, Math.round((area.width - width) / 2)),
+      y: Math.max(8, Math.round((area.height - height) / 2)),
+      width,
+      height,
+    },
+    z: 0,
+    minimized: false,
+    maximized: false,
+    restoreRect: null,
+  }
+  windowsState.windows.push(win)
+  focus(win.id)
+  return win.id
+}
+
+export function openPhotobook(slug: string, title: string): string {
+  const existing = windowsState.windows.find((w) => w.kind === 'photobook' && w.slug === slug)
+  if (existing) {
+    existing.minimized = false
+    focus(existing.id)
+    return existing.id
+  }
+
+  const n = windowsState.windows.filter((w) => w.kind === 'photobook').length
+  const win: AppWindow = {
+    id: `photobook:${slug}`,
+    kind: 'photobook',
+    title: `${title} - Photobook`,
+    slug,
+    rect: {
+      x: 60 + (n % 6) * 24,
+      y: 32 + (n % 6) * 24,
+      width: 760,
+      height: 560,
     },
     z: 0,
     minimized: false,

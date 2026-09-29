@@ -7,8 +7,30 @@ export interface PostMeta {
   summary: string
 }
 
+export interface CollectionImage {
+  file: string
+  caption?: string
+  text?: string
+}
+
+export interface CollectionPage {
+  title?: string
+  text?: string
+  images?: CollectionImage[]
+}
+
+export interface CollectionMeta {
+  slug: string
+  title: string
+  date: string
+  summary: string
+  cover: string
+  pages: CollectionPage[]
+}
+
 export interface Manifest {
   posts: PostMeta[]
+  collections: CollectionMeta[]
 }
 
 const BASE = import.meta.env.BASE_URL
@@ -34,4 +56,22 @@ export async function getPostMarkdown(slug: string): Promise<string> {
   const res = await fetch(`${BASE}content/${post.file}`)
   if (!res.ok) throw new Error(`Failed to load post (${res.status})`)
   return res.text()
+}
+
+export async function getCollections(): Promise<CollectionMeta[]> {
+  const manifest = await getManifest()
+  return manifest.collections
+}
+
+export async function getCollection(slug: string): Promise<CollectionMeta> {
+  const manifest = await getManifest()
+  const collection = manifest.collections.find((c) => c.slug === slug)
+  if (!collection) throw new Error(`Collection not found: ${slug}`)
+  return collection
+}
+
+// Images and covers are referenced by a path relative to their collection
+// directory (e.g. `images/01.jpg`). Build the runtime URL from the slug.
+export function collectionAssetUrl(slug: string, file: string): string {
+  return `${BASE}content/photography/${encodeURIComponent(slug)}/${file}`
 }

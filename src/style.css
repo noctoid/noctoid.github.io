@@ -113,11 +113,20 @@ body {
 }
 
 /* ---------- Desktop icons ---------- */
-.desktop-icon {
+.desktop-icons {
   position: absolute;
-  top: 12px;
-  left: 12px;
+  inset: 0;
   z-index: 0;
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-rows: repeat(auto-fill, 78px);
+  grid-auto-columns: 84px;
+  padding: 8px;
+}
+
+.desktop-icon {
+  width: 84px;
+  height: 78px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -578,3 +587,294 @@ body {
 .markdown-body table { border-collapse: collapse; }
 .markdown-body th, .markdown-body td { border: 1px solid #808080; padding: 2px 6px; }
 .markdown-body img { max-width: 100%; }
+/* ---------- Photography: cover flow ---------- */
+.photography-window {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.coverflow {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.coverflow-stage {
+  flex: 1;
+  min-height: 0;
+  position: relative;
+  overflow: hidden;
+  perspective: 1300px;
+  perspective-origin: 50% 42%;
+  background: linear-gradient(to bottom, #2b2b2b, #181818);
+}
+
+.coverflow-stage:focus {
+  outline: none;
+}
+
+.coverflow-item {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 168px;
+  height: 224px;
+  margin: -112px 0 0 -84px;
+  padding: 0;
+  background: none;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  min-width: 0;
+  min-height: 0;
+  box-sizing: border-box;
+  transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+  backface-visibility: hidden;
+  cursor: pointer;
+}
+
+.coverflow-item:focus {
+  outline: none;
+}
+
+.coverflow-item img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border: 1px solid #000;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.55);
+  -webkit-box-reflect: below 6px linear-gradient(transparent 70%, rgba(0, 0, 0, 0.45));
+}
+
+.coverflow-fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding: 14px;
+  box-sizing: border-box;
+  background: linear-gradient(160deg, #4a2d7a, #1f1240);
+  border: 1px solid #000;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.55);
+  color: #fff;
+  font-weight: 700;
+  text-align: center;
+  word-break: break-word;
+  -webkit-box-reflect: below 6px linear-gradient(transparent 70%, rgba(0, 0, 0, 0.45));
+}
+
+.coverflow-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 10px;
+  background: #c0c0c0;
+  border-top: 1px solid #808080;
+  box-shadow: inset 0 1px #fff;
+}
+
+.coverflow-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.coverflow-title {
+  font-weight: 700;
+  color: #000;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.coverflow-summary {
+  font-size: 11px;
+  color: #404040;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.coverflow-open {
+  min-width: 64px;
+}
+
+/* ---------- Photography: photobook reader ---------- */
+.photobook {
+  flex: 1;
+  min-height: 0;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(to bottom, #4a4a4a, #333);
+  overflow: hidden;
+  outline: none;
+}
+
+.photobook-status {
+  margin: auto;
+  color: #fff;
+  padding: 12px;
+}
+
+.photobook-page {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  margin: 12px 52px;
+  padding: 18px 22px;
+  background: #fbfbf6;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6), inset 0 0 40px rgba(0, 0, 0, 0.04);
+}
+
+.photobook-page-title {
+  margin: 0 0 8px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+.photobook-page-text {
+  margin: 0 0 14px;
+  font-size: 13px;
+  color: #333;
+  line-height: 1.5;
+}
+
+.photobook-images {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.photobook-images.single {
+  flex-wrap: nowrap;
+}
+
+.photobook-images.single .photobook-figure {
+  flex: 1;
+  min-width: 0;
+}
+
+.photobook-figure {
+  flex: 1 1 240px;
+  min-width: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.photobook-figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 58vh;
+  object-fit: contain;
+  background: #fff;
+  border: 1px solid #ccc;
+  cursor: zoom-in;
+}
+
+.photobook-caption {
+  margin: 6px 0 0;
+  font-size: 12px;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+.photobook-text {
+  margin: 4px 0 0;
+  font-size: 12px;
+  color: #444;
+  line-height: 1.45;
+}
+
+.photobook-footer {
+  display: flex;
+  justify-content: center;
+  padding: 4px 0 8px;
+  color: #ddd;
+  font-size: 11px;
+}
+
+.photobook-nav {
+  position: absolute;
+  top: 12px;
+  bottom: 12px;
+  width: 44px;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  min-width: 0;
+  min-height: 0;
+  color: transparent;
+  font-size: 40px;
+  line-height: 1;
+  cursor: pointer;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.photobook-nav:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+}
+
+.photobook-nav:disabled {
+  cursor: default;
+  opacity: 0;
+}
+
+.photobook-nav:focus {
+  outline: none;
+}
+
+.photobook-nav-left {
+  left: 0;
+}
+
+.photobook-nav-right {
+  right: 0;
+}
+
+/* ---------- Photography: zoom overlay ---------- */
+.photobook-zoom {
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: rgba(0, 0, 0, 0.88);
+  cursor: zoom-out;
+}
+
+.photobook-zoom img {
+  max-width: 96%;
+  max-height: calc(100% - 48px);
+  object-fit: contain;
+  border: 1px solid #555;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+}
+
+.photobook-zoom-caption {
+  max-width: 90%;
+  color: #eee;
+  font-size: 13px;
+  text-align: center;
+}

@@ -3,6 +3,7 @@ import { onBeforeUnmount, onMounted, ref } from 'vue'
 import { TASKBAR_HEIGHT, taskbarActivate, windowsState } from '@/lib/windows'
 import SuitcaseIcon from '@/components/SuitcaseIcon.vue'
 import FileIcon from '@/components/FileIcon.vue'
+import CameraIcon from '@/components/CameraIcon.vue'
 import StartMenu from '@/components/StartMenu.vue'
 
 const now = ref('')
@@ -82,6 +83,7 @@ function restart() {
         @click="taskbarActivate(win.id)"
       >
         <SuitcaseIcon v-if="win.kind === 'explorer'" class="taskbar-icon" />
+        <CameraIcon v-else-if="win.kind === 'photos' || win.kind === 'photobook'" class="taskbar-icon" />
         <FileIcon v-else class="taskbar-icon" />
         <span class="task-button-label">{{ win.title }}</span>
       </button>

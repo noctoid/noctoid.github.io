@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { openArticle, openExplorer } from '@/lib/windows'
+import { openArticle, openExplorer, openPhotography } from '@/lib/windows'
 
 const emit = defineEmits<{
   close: []
@@ -8,6 +8,11 @@ const emit = defineEmits<{
 
 function openBlogs() {
   openExplorer()
+  emit('close')
+}
+
+function openPhotos() {
+  openPhotography()
   emit('close')
 }
 
@@ -34,6 +39,7 @@ function shutdownComputer() {
     </div>
     <div class="start-menu-list">
       <button type="button" role="menuitem" class="start-menu-item" @click="openBlogs">Blogs</button>
+      <button type="button" role="menuitem" class="start-menu-item" @click="openPhotos">Photography</button>
       <button type="button" role="menuitem" class="start-menu-item" @click="openAbout">About Me</button>
       <button type="button" role="menuitem" class="start-menu-item" @click="openGitHub">My Github Page</button>
       <div class="start-menu-sep"></div>

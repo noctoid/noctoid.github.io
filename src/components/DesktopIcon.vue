@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { openExplorer } from '@/lib/windows'
-import SuitcaseIcon from '@/components/SuitcaseIcon.vue'
+
+defineProps<{ label: string }>()
+
+const emit = defineEmits<{ open: [] }>()
 
 const selected = ref(false)
 
@@ -11,7 +13,7 @@ function select() {
 
 function open() {
   selected.value = false
-  openExplorer()
+  emit('open')
 }
 </script>
 
@@ -20,11 +22,11 @@ function open() {
     type="button"
     class="desktop-icon"
     :class="{ selected }"
-    title="Blogs"
+    :title="label"
     @click="select"
     @dblclick="open"
   >
-    <SuitcaseIcon class="desktop-icon-img" />
-    <span class="desktop-icon-label">Blogs</span>
+    <slot />
+    <span class="desktop-icon-label">{{ label }}</span>
   </button>
 </template>
