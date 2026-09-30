@@ -1,18 +1,13 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+defineProps<{ label: string; selected?: boolean }>()
 
-defineProps<{ label: string }>()
+const emit = defineEmits<{ select: []; open: [] }>()
 
-const emit = defineEmits<{ open: [] }>()
-
-const selected = ref(false)
-
-function select() {
-  selected.value = true
+function onSelect() {
+  emit('select')
 }
 
-function open() {
-  selected.value = false
+function onOpen() {
   emit('open')
 }
 </script>
@@ -23,8 +18,8 @@ function open() {
     class="desktop-icon"
     :class="{ selected }"
     :title="label"
-    @click="select"
-    @dblclick="open"
+    @click="onSelect"
+    @dblclick="onOpen"
   >
     <slot />
     <span class="desktop-icon-label">{{ label }}</span>

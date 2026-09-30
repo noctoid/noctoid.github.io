@@ -203,6 +203,8 @@ body {
 .window-frame .title-bar {
   user-select: none;
   cursor: default;
+  line-height: normal;
+  padding: 2px 2px 2px 3px;
 }
 
 .window-content {
@@ -877,4 +879,118 @@ body {
   color: #eee;
   font-size: 13px;
   text-align: center;
+}
+/* ---------- File explorer toolbar ---------- */
+.explorer-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 0;
+}
+
+.explorer-toolbar button {
+  min-width: 0;
+  min-height: 0;
+  padding: 3px 10px;
+}
+
+.explorer-toolbar .address-bar {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.explorer-toolbar .address-label {
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.explorer-toolbar .address-bar input {
+  flex: 1;
+  min-width: 0;
+  width: 100%;
+}
+
+/* ---------- Image viewer ---------- */
+.image-viewer {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #808080;
+  overflow: hidden;
+  padding: 8px;
+}
+
+.image-viewer img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  background: #fff;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.5);
+}
+/* ---------- Browser (IE4) ---------- */
+.browser {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.browser-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 2px;
+  border-top: 1px solid #fff;
+  border-bottom: 1px solid #808080;
+}
+
+.browser-toolbar button {
+  min-width: 0;
+  min-height: 0;
+  padding: 3px 10px;
+}
+
+.browser-toolbar .sep {
+  align-self: stretch;
+  width: 1px;
+  margin: 1px 3px;
+  background: #808080;
+  box-shadow: 1px 0 #fff;
+}
+
+.browser-address {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 4px;
+}
+
+.browser-address-label {
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.browser-address input {
+  flex: 1;
+  min-width: 0;
+  width: 100%;
+}
+
+.browser-address button {
+  min-width: 0;
+  min-height: 0;
+  padding: 2px 12px;
+}
+
+.browser-frame {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  border: none;
+  background: #fff;
 }

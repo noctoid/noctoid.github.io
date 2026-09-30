@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { openArticle, openExplorer, openPhotography } from '@/lib/windows'
+import { openArticle, openBrowser, openExplorer, openMyComputer, openPhotography } from '@/lib/windows'
 
 const emit = defineEmits<{
   close: []
@@ -13,6 +13,16 @@ function openBlogs() {
 
 function openPhotos() {
   openPhotography()
+  emit('close')
+}
+
+function openComputer() {
+  openMyComputer()
+  emit('close')
+}
+
+function openBrowserMenu() {
+  openBrowser()
   emit('close')
 }
 
@@ -38,6 +48,8 @@ function shutdownComputer() {
       <span class="start-menu-banner-text">Noctoid</span>
     </div>
     <div class="start-menu-list">
+      <button type="button" role="menuitem" class="start-menu-item" @click="openComputer">My Computer</button>
+      <button type="button" role="menuitem" class="start-menu-item" @click="openBrowserMenu">Internet Explorer</button>
       <button type="button" role="menuitem" class="start-menu-item" @click="openBlogs">Blogs</button>
       <button type="button" role="menuitem" class="start-menu-item" @click="openPhotos">Photography</button>
       <button type="button" role="menuitem" class="start-menu-item" @click="openAbout">About Me</button>

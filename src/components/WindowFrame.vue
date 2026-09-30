@@ -50,6 +50,12 @@ function onTitlePointerDown(e: PointerEvent) {
   startDrag(e)
 }
 
+function onTitleDblClick(e: MouseEvent) {
+  const target = e.target as HTMLElement
+  if (target.closest('.title-bar-controls')) return
+  toggleMaximize(props.win.id)
+}
+
 function startDrag(e: PointerEvent) {
   const win = props.win
   if (win.maximized) return
@@ -115,7 +121,7 @@ function startResize(e: PointerEvent, dir: Dir) {
     :style="frameStyle"
     @pointerdown="focus(win.id)"
   >
-    <div class="title-bar" :class="{ inactive: !active }" @pointerdown="onTitlePointerDown">
+    <div class="title-bar" :class="{ inactive: !active }" @pointerdown="onTitlePointerDown" @dblclick="onTitleDblClick">
       <div class="title-bar-text">{{ win.title }}</div>
       <div class="title-bar-controls">
         <button aria-label="Minimize" @click.stop="minimizeWindow(win.id)"></button>

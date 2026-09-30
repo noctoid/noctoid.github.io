@@ -4,7 +4,7 @@ export const TASKBAR_HEIGHT = 28
 export const MIN_WIDTH = 320
 export const MIN_HEIGHT = 200
 
-export type WindowKind = 'explorer' | 'article' | 'photos' | 'photobook'
+export type WindowKind = 'explorer' | 'article' | 'photos' | 'photobook' | 'computer' | 'image' | 'browser'
 
 export interface Rect {
   x: number
@@ -240,6 +240,98 @@ export function openPhotobook(slug: string, title: string): string {
       y: 32 + (n % 6) * 24,
       width: 760,
       height: 560,
+    },
+    z: 0,
+    minimized: false,
+    maximized: false,
+    restoreRect: null,
+  }
+  windowsState.windows.push(win)
+  focus(win.id)
+  return win.id
+}
+
+export function openMyComputer(): string {
+  const existing = windowsState.windows.find((w) => w.kind === 'computer')
+  if (existing) {
+    existing.minimized = false
+    focus(existing.id)
+    return existing.id
+  }
+
+  const area = workArea()
+  const width = Math.min(700, area.width - 24)
+  const height = Math.min(520, area.height - 24)
+  const win: AppWindow = {
+    id: 'computer',
+    kind: 'computer',
+    title: 'My Computer',
+    rect: {
+      x: Math.max(8, Math.round((area.width - width) / 2)),
+      y: Math.max(8, Math.round((area.height - height) / 2)),
+      width,
+      height,
+    },
+    z: 0,
+    minimized: false,
+    maximized: false,
+    restoreRect: null,
+  }
+  windowsState.windows.push(win)
+  focus(win.id)
+  return win.id
+}
+
+export function openImage(url: string, name: string): string {
+  const existing = windowsState.windows.find((w) => w.kind === 'image' && w.slug === url)
+  if (existing) {
+    existing.minimized = false
+    focus(existing.id)
+    return existing.id
+  }
+
+  const n = windowsState.windows.filter((w) => w.kind === 'image').length
+  const win: AppWindow = {
+    id: `image:${url}`,
+    kind: 'image',
+    title: name,
+    slug: url,
+    rect: {
+      x: 80 + (n % 8) * 24,
+      y: 48 + (n % 8) * 24,
+      width: 520,
+      height: 440,
+    },
+    z: 0,
+    minimized: false,
+    maximized: false,
+    restoreRect: null,
+  }
+  windowsState.windows.push(win)
+  focus(win.id)
+  return win.id
+}
+
+export function openBrowser(): string {
+  const existing = windowsState.windows.find((w) => w.kind === 'browser')
+  if (existing) {
+    existing.minimized = false
+    focus(existing.id)
+    return existing.id
+  }
+
+  const area = workArea()
+  const width = Math.min(820, area.width - 24)
+  const height = Math.min(600, area.height - 24)
+  const win: AppWindow = {
+    id: 'browser',
+    kind: 'browser',
+    title: 'Internet Explorer',
+    rect: {
+      x: Math.max(8, Math.round((area.width - width) / 2)),
+      y: Math.max(8, Math.round((area.height - height) / 2)),
+      width,
+      height,
     },
     z: 0,
     minimized: false,

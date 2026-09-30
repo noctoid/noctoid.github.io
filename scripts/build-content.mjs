@@ -66,13 +66,37 @@ function buildCollections() {
     .sort((a, b) => (a.date < b.date ? 1 : -1))
 }
 
+// The file-system tree of content/, presented as drive C: in "My Computer".
+// Excludes the generated index.json (not part of the repo structure).
+function walk(dir, rel) {
+  return readdirSync(dir, { withFileTypes: true })
+    .filter((e) => !(rel === '' && e.name === 'index.json'))
+    .map((e) => {
+      const childRel = rel ? `${rel}/${e.name}` : e.name
+      if (e.isDirectory()) {
+        return { name: e.name, type: 'dir', path: childRel, children: walk(join(dir, e.name), childRel) }
+      }
+      return { name: e.name, type: 'file', path: childRel, ext: extname(e.name).toLowerCase() }
+    })
+    .sort((a, b) => {
+      if (a.type !== b.type) return a.type === 'dir' ? -1 : 1
+      return a.name.localeCompare(b.name)
+    })
+}
+
+function buildTree() {
+  if (!existsSync(CONTENT_DIR)) return []
+  return walk(CONTENT_DIR, '')
+}
+
 function buildManifest() {
   const posts = buildPosts()
   const collections = buildCollections()
+  const tree = buildTree()
 
   const out = join(CONTENT_DIR, 'index.json')
-  writeFileSync(out, `${JSON.stringify({ posts, collections }, null, 2)}\n`)
-  console.log(`content/index.json: ${posts.length} post(s), ${collections.length} collection(s)`)
+  writeFileSync(out, `${JSON.stringify({ posts, collections, tree }, null, 2)}\n`)
+  console.log(`content/index.json: ${posts.length} post(s), ${collections.length} collection(s), ${tree.length} root item(s)`)
 }
 
 buildManifest()
